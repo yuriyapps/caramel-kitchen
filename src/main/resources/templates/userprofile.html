@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Caramel Kitchen Profile</title>
+
+    <!--Let browser know website is optimized for mobile-->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Custom stylings-->
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+
+<body th:with="reason=${session.pageType}">
+<nav>
+    <div class="nav-wrapper amber lighten-4">
+        <a href="#" class="brand-logo" tabindex="-1"></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a th:href="@{/home}"><p style="display: inline-flex"><i class="material-icons">home</i>Home</p></a></li>
+            <li><a th:href="@{/create}"><p style="display: inline-flex"><i class="material-icons">content_copy</i>Create Recipe</p></a></li>
+            <li><a th:href="@{/aboutus}"><p style="display: inline-flex"><i class="material-icons">people</i>About Us</p></a></li>
+            <li><a th:href="@{/logout}"><p style="display: inline-flex"><i class="material-icons">exit_to_app</i>Logout</p></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container custom-box userprofile-container">
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#profile">Profile</a></li>
+                <li class="tab col s3"><a href="#userAddIngredient">Add Ingredient</a></li>
+                <li class="tab col s3"><a href="#userAddTool">Add Tool</a></li>
+            </ul>
+        </div>
+
+        <div class="col s12" id="profile">
+            <div class="col s6">
+                <h5 class="row center">Created Recipes</h5>
+                <ul id="user-recipes" class="collapsible col s12" data-collapsible="accordian">
+<!--                    <li>-->
+<!--                        <div class="collapsible-header btn-large waves-effect waves-light custom-collapsible-btn">apple-->
+<!--                            pie-->
+<!--                        </div>-->
+<!--                        <div class="collapsible-body">-->
+<!--                            <p>Rating</p>-->
+<!--                            <a href="#">Remove</a>-->
+<!--                            <a href="#">Modify</a>-->
+<!--                            <a href="#">View Parents</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <div class="collapsible-header btn-large waves-effect waves-light custom-collapsible-btn"><i class="material-icons">people</i>roast chicken-->
+<!--                        </div>-->
+<!--                        <div class="collapsible-body">-->
+<!--                            <p>Rating</p>-->
+<!--                            <a href="#">Remove</a>-->
+<!--                            <a href="#">Modify</a>-->
+<!--                            <a href="#">View Parents</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+            <div class="col s6">
+                <h5 class="row center">In progress</h5>
+                <ul id="inprogress-recipes" class="collapsible col s12" data-collapsible="accordian">
+
+                </ul>
+            </div>
+            <div class="col s6">
+                <h5 class="row center">Completed</h5>
+                <ul id="completed-recipes" class="collapsible col s12" data-collapsible="accordian">
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="userAddIngredient" class="col s12">
+            <div class="col s4">
+                <div id="ingredient-card" class="card">
+                    <div class="card-image"><img id="item-image" src="/images/placeholder.png"></div>
+                    <div class="card-content">
+                        <p id="item-name">ingredient name</p>
+                    </div>
+                </div>
+                <h4>Uploaded ingredients</h4>
+                <div style="max-height: 166px;overflow-y: auto;">
+                    <ul id="created-ingredients" class="collection">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col s7 offset-s1">
+<!--                <form enctype="multipart/form-data" action="/request" method="POST">-->
+                <form enctype="multipart/form-data" action="/request" method="POST">
+                    <div class="col s12 file-field input-field">
+                        <div class="btn">
+                            <span>Add Image File</span>
+                            <input name="file" type="file" id="ingredient-img-input" accept="image/*" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="col s12 input-field">
+                        <i id="name-icon" class="material-icons prefix">restaurant_menu</i>
+                        <input name="name" id="ingredient-name" type="text" class="validate" required>
+                        <label id="name-label" for="ingredient-name">Ingredient name</label>
+                    </div>
+                    <div class="col s12 input-field">
+                        <i class="material-icons prefix">subdirectory_arrow_right</i>
+                        <select class="browser-default offset-s1 col s11" name="type" id="ingredient-type" required>
+                            <option value="">Specify Ingredient Type</option>
+                        </select>
+                    </div>
+                    <div class="action-list">
+                        <ul id="ingredient-actable-actions">
+    <!--                            <li class="col s12 input-field">-->
+    <!--                                <i class="material-icons prefix">chevron_right</i>-->
+    <!--                                <select class="browser-default offset-s1 col s11">-->
+    <!--                                    <option value="">Select an action</option>-->
+    <!--                                    <option value="1">Option 1</option>-->
+    <!--                                    <option value="2">Option 2</option>-->
+    <!--                                    <option value="3">Option 3</option>-->
+    <!--                                </select>-->
+    <!--                            </li>-->
+                        </ul>
+
+                        <a class="col s12" href="javascript:ingredientRequest.addAction()"><i class="material-icons">add</i>Add more actions...</a>
+                    </div>
+                    <input id="ingredient-id" name="id" type="hidden" value="">
+                    <button type="submit" class="col s6 offset-s3 btn-large waves-effect waves-orange orange lighten-1" style="margin-top: 10px;"><i class="material-icons left">archive</i>Add</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="userAddTool" class="col s12">
+            <div class="col s4">
+                <div id="tool-card" class="card">
+                    <div class="card-image"><img src="/images/placeholder.png" style="height: auto"></div>
+                    <div class="card-content">
+                        <p>tool name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s7 offset-s1">
+                <form enctype="multipart/form-data" action="/request" method="POST">
+                    <div class="col s12 file-field input-field">
+                        <div class="btn">
+                            <span>Add Image File</span>
+                            <input name="file" type="file" id="tool-img-input" accept="image/*" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <div class="col s12 input-field">
+                        <i class="material-icons prefix">restaurant</i>
+                        <input name="name" id="tool-name" type="text" class="validate" required>
+                        <label for="tool-name">Tool name</label>
+                    </div>
+
+                    <div class="action-list">
+                        <ul id="tool-actions">
+    <!--                            <li class="col s12 input-field">-->
+    <!--                                <i class="material-icons prefix">chevron_right</i>-->
+    <!--                                <select class="browser-default offset-s1 col s11">-->
+    <!--                                    <option value="">Select an action</option>-->
+    <!--                                    <option value="1">Option 1</option>-->
+    <!--                                    <option value="2">Option 2</option>-->
+    <!--                                    <option value="3">Option 3</option>-->
+    <!--                                </select>-->
+    <!--                            </li>-->
+                        </ul>
+
+                        <a class="col s12" href="javascript:toolRequest.addAction()"><i class="material-icons">add</i>Add more actions...</a>
+                    </div>
+
+                    <button type="submit" class="col s6 offset-s3 btn-large waves-effect waves-orange orange lighten-1" style="margin-top: 10px;"><i class="material-icons left">archive</i>Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/js/ItemRequest.js"></script>
+<script src="/js/RecipeInteract.js"></script>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        let materialize_collapsible = document.querySelectorAll(".collapsible");
+        let collapsible = M.Collapsible.init(materialize_collapsible);
+
+        let materialize_select = document.querySelectorAll(".select");
+        let select = M.FormSelect.init(materialize_select);
+
+        const materialize_tab = document.querySelectorAll(".tabs");
+        const tab = M.Tabs.init(materialize_tab);
+
+        setUserIngredients();
+    });
+
+
+    document.querySelector("#tool-img-input").enctype = 'multipart/form-data';
+    document.querySelector("#ingredient-img-input").enctype = 'multipart/form-data';
+    const toast = [[${message}]];
+    if(toast) M.toast({html: toast, displayLength: 2500});
+
+    const tool_name = document.querySelector("#tool-name");
+    const tool_card = document.querySelector("#tool-card");
+    const tool_img = document.querySelector("#tool-img-input");
+    const tool_actions = document.querySelector("#tool-actions");
+    let toolRequest = new ItemRequest("tool", tool_card, tool_name, tool_img, tool_actions);
+    toolRequest.addAction();
+
+    const ingredient_name = document.querySelector("#ingredient-name");
+    const ingredient_card = document.querySelector("#ingredient-card");
+    const ingredient_img = document.querySelector("#ingredient-img-input");
+    const ingredient_actions = document.querySelector("#ingredient-actable-actions");
+    const ingredient_types = document.querySelector("#ingredient-type");
+    let ingredientRequest = new ItemRequest("ingredient", ingredient_card, ingredient_name, ingredient_img, ingredient_actions, ingredient_types);
+    ingredientRequest.addAction();
+    ingredientRequest.addTypes();
+
+    const created_recipe_ul = document.querySelector("#user-recipes");
+    let createdRecipeInteract = new RecipeInteract(created_recipe_ul);
+    createdRecipeInteract.loadCreatedRecipes();
+
+    const inprogress_recipe_ul = document.querySelector("#inprogress-recipes");
+    let inProgressRecipeInteract = new RecipeInteract(inprogress_recipe_ul);
+    inProgressRecipeInteract.loadInprogressRecipes();
+
+    const completed_recipe_ul = document.querySelector("#completed-recipes");
+    let completedRecipeInteract = new RecipeInteract(completed_recipe_ul);
+    completedRecipeInteract.loadCompletedRecipes();
+
+    async function setUserIngredients() {
+        const user_ingredients = await fetch("/get-modifiable-ingredients", {
+            method: "GET",
+            contentType: "text/plain"
+        })
+            .then(response => response.json())
+            .catch((e)=>{console.log("err " + e)});
+
+
+
+
+        for (let i = 0; i < user_ingredients.length; i++) {
+            const li = document.createElement("li");
+            li.classList.add("collection-item");
+            li.onclick = async function(e) {
+                $('#created-ingredients').children().removeClass("active");
+                li.classList.add("active");
+                $('#item-image').attr('src', user_ingredients[i].imageFileUrl);
+                document.querySelector("#item-name").innerText = user_ingredients[i].name;
+
+                $('#name-icon').addClass("active");
+                $('#name-label').addClass("active");
+                $('#ingredient-id').val(user_ingredients[i].id);
+                $('#ingredient-name').val(user_ingredients[i].name);
+                $('#ingredient-type').val(user_ingredients[i].type);
+                const actions_response = await fetch("/get-ingredient-whitelist/" + user_ingredients[i].name, {
+                    method: "GET",
+                    contentType: "text/plain"
+                })
+                    .then(response => response.json())
+                    .catch((e)=>{console.log("err " + e)});
+
+                let actions_list = $('#ingredient-actable-actions').children();
+                if(actions_list.length > 1) {
+                    for (let i = 1; i< actions_list.length; i++) {
+                        actions_list[i].remove();
+                    }
+
+                }
+
+                actions_response.actions.forEach( (e) =>{
+                    let duplicatedNode = document.querySelector('.action-item').cloneNode(true);
+                    $(duplicatedNode.children[1]).val(e);
+                    $('#ingredient-actable-actions').append(duplicatedNode);
+                });
+            };
+            const textNode = document.createElement("p");
+            textNode.innerText = user_ingredients[i].name;
+
+            li.appendChild(textNode);
+            $('#created-ingredients').append(li);
+        }
+
+    }
+
+</script>
+</body>
+</html>

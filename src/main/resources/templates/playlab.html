@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Caramel Kitchen</title>
+
+    <!--Let browser know website is optimized for mobile-->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!--Custom stylings-->
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+
+<body th:with="reason=${session.pageType}">
+<nav>
+    <div class="nav-wrapper amber lighten-4">
+        <a href="#" class="brand-logo" tabindex="-1"></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a th:href="@{/home}"><p style="display: inline-flex"><i class="material-icons">home</i>Home</p></a></li>
+            <li><a th:href="@{/userprofile}"><p style="display: inline-flex"><i class="material-icons">face</i>Profile</p></a></li>
+            <li><a th:href="@{/logout}"><p style="display: inline-flex"><i class="material-icons">exit_to_app</i>Logout</p></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container custom-box kitchen-container">
+    <div class="row">
+        <div class="col s10">
+<!--            <div id="cooking-board" class="row">-->
+                <!--            <div class="col s2">-->
+    <!--                <div id="temp" class="ingredient card waves-effect waves-light">-->
+    <!--                    <div class="card-image"><img src="images/apple.png"></div>-->
+    <!--                    <div class="card-content center"><p>Apple</p></div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+<!--            </div>-->
+            <ul class="tabs">
+                <li class="tab col s3"><a id="return-tab" class="active" href="#items">Your Items</a></li>
+                <li class="tab col s3"><a href="#gameView" style="user-select: none; pointer-events: none;">Game</a></li>
+            </ul>
+        </div>
+
+        <div class="col s10" id="items">
+            <div class="row">
+                <div id="item-search" class="col s3">
+                    <h4>Item Search</h4>
+                    <div class="col s12 input-field">
+                        <input id="item-search-keyword" type="text">
+                        <label for="item-search-keyword">search for...</label>
+                    </div>
+                    <ul id="item-search-results" class="col s12 collection">
+                        <!--                <li class="collection-item">item</li>-->
+                    </ul>
+                </div>
+                <div class="col s9">
+                    <div class="row" style="height: 640px;">
+                        <div id="item-descriptor">
+                            <span style="opacity: 0.7; font-size: 21px; user-select: none;">Get the items you need on the left and do your best to follow the recipe on the right! Hover and select item[s] for actions.</span>
+                        </div>
+
+                        <div id="item-board" class="row">
+                            <div class="col s6">
+                                <div id="ingredient-area" class="row">
+
+                                </div>
+                                <div id="tool-area" class="row">
+
+                                </div>
+                            </div>
+                            <div id="processedItem-area" class="col s6">
+
+                            </div>
+            <!--                <div class="col s4 m3 l2">-->
+            <!--                    <div class="ingredient card waves-effect waves-light active-item">-->
+            <!--                        <div class="card-image"><img src="images/placeholder.png"></div>-->
+            <!--                        <div class="card-content center"><p>apple</p></div>-->
+            <!--                        <div class="card-menu">-->
+            <!--                            <ul id="card-menu-ul">-->
+            <!--                                <li class="menu-option" oncontextmenu="return false">Chopping</li>-->
+            <!--                                <li class="menu-option" oncontextmenu="return false">Menu-option</li>-->
+            <!--                            </ul>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s10" id="gameView">
+            <div id="game-area">
+<!--                <h1>temp</h1>-->
+<!--                <h2>instruction</h2>-->
+<!--                <h1>countdown</h1>-->
+            </div>
+        </div>
+
+        <div class="col s2">
+            <div id="kitchen_sidebar" class="row">
+<!--                <div class="col s12 card-panel teal kitchen_sidebar_info"><span class="white-text">Timer</span>-->
+<!--                </div>-->
+<!--                <div class="col s12 card-panel teal kitchen_sidebar_info"><span class="white-text">Score</span>-->
+<!--                </div>-->
+                <div class="col s12">
+                    <div>
+                        <button id="reset" onclick="resetGame()" class="waves-effect waves-light btn-small orange lighten-1"><i class="material-icons right">rotate_left</i>Reset</button>
+                    </div>
+                    <h4 class="right">Recipe</h4>
+                </div>
+                <div id="recipe_section" class="col s12">
+                    <ul id="recipe_ul">
+<!--                        <li class="collection-item">-->
+<!--                            <div>placeholder</p></div>-->
+<!--                        </li>-->
+<!--                        <li class="collection-item blue lighten-4">-->
+<!--                            <div>placeholder</div>-->
+<!--                        </li>-->
+
+                        <li class="recipe-step" th:each="step:${game.recipe.subprocedureList}" th:text="${step.instructions}"></li>
+                    </ul>
+                </div>
+                <div id="mistake-counter" class="card-panel col s12">
+                    Mistakes: <span id="mistakes">0</span>
+                </div>
+                <button id="finish" class="waves-effect waves-light btn-large col s12 disabled" style="width: 95%">Finish</button>
+                <button id="save" style="width: 95%" class="waves-effect yellow black-text lighten-3 btn col s12">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="/js/CookingBoard.js"></script>
+<script src="/js/Instructions.js"></script>
+<script src="/js/ItemSelection.js"></script>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const materialize_tab = document.querySelectorAll(".tabs");
+        const tab = M.Tabs.init(materialize_tab);
+    });
+
+    let recipe_score = 0;
+
+    let game = [[${game}]];
+    console.log(game);
+
+    let current_game_script = null;
+    let current_game_css = null;
+
+    const user_recipe_ul = document.querySelector("#recipe_ul");
+    const user_recipe_steps = [[${game.recipe.subprocedureList}]];
+    const user_recipe_intermediate_ingredients = [[${game.recipe.intermediateIngredients}]];
+    const user_recipe = new Instructions(user_recipe_ul, user_recipe_steps, user_recipe_intermediate_ingredients);
+
+    const reset_button = document.querySelector("#reset");
+    async function resetGame(){
+        const newGame = await fetch("/reset", {
+               method: "POST",
+               body: JSON.stringify(game),
+               headers: {
+                    "Content-Type": "application/json"
+               }})
+               .then(response => null)
+               .then(data => window.location.reload(true))
+               .catch((e)=>{console.log("err " + e)});
+
+    }
+
+    const item_board = document.querySelector("#item-board");
+    const ingredient_area = document.querySelector("#ingredient-area");
+    const tool_area = document.querySelector("#tool-area");
+    const processedItem_area = document.querySelector("#processedItem-area");
+    const board_areas = [ingredient_area, tool_area, processedItem_area];
+    const game_area = document.querySelector("#gameView");
+    const item_descriptor = document.querySelector("#item-descriptor");
+    const itemBoard = new CookingBoard(board_areas, user_recipe, game_area, item_descriptor);
+    // for(let tool of game.recipe.kitchenTools){
+    //     itemBoard.addItem(tool, "tool");
+    // }
+    // for(let ingredient of game.recipe.ingredients){
+    //     itemBoard.addItem(ingredient, "ingredient");
+    // }
+    // itemBoard.updateMenu();
+
+    const search_input = document.querySelector("#item-search-keyword");
+    const search_ul = document.querySelector("#item-search-results");
+    const itemSelection = new ItemSelection(search_input, search_ul, itemBoard);
+    itemSelection.searchAllQuery();
+
+    let scores = []
+    for (let i = 0; i < recipe_ul.children.length; i++) {
+            scores.push(false);
+    }
+
+    function isRecipeCompleted(){
+        return scores.every(function(e){ return e === true;});
+    }
+
+    $('#save').click(async function(){
+        let data = {
+            "gameId": game.id,
+            "recipeId": game.recipe.id,
+            "ingredients": itemBoard.getIngredients(),
+            "kitchenTools": itemBoard.getTools(),
+            "intermediateIngredients": itemBoard.getIntermediateSteps(),
+            "scores": scores,
+            "mistakes":parseInt(document.getElementById("mistakes").textContent)
+        };
+        const savedGameResults = await fetch("/save-game", {
+               method: "POST",
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }})
+                .then(response => null)
+                .catch((e)=>{console.log("err " + e)});
+        M.toast({html: "Progress saved successfully!", displayLength: 1500});
+    });
+
+
+    $('#finish').click(async function(){
+        let finalGameState = {
+            "gameId": game.id,
+            "recipeId": game.recipe.id,
+            "ingredients": itemBoard.getIngredients(),
+            "kitchenTools": itemBoard.getTools(),
+            "intermediateIngredients": itemBoard.getIntermediateSteps(),
+            "scores": scores,
+            "mistakes":parseInt(document.getElementById("mistakes"))
+        };
+
+        game.gameState = finalGameState;
+        let x=Math.max(0,(1-parseInt(document.getElementById("mistakes").textContent)/scores.length));
+        game.score = 100*x;
+        const savedGameResults = await fetch("/finish-game", {
+               method: "POST",
+                    body: JSON.stringify(game),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }})
+                .then(response => response.json())
+                .catch((e)=>{console.log("err " + e)});
+        /* TODO: event listener to send rating to server on input */
+
+        let endPromptHtml = `<div class="row">
+        <div class="col s12">Submission received!</div>
+        <div class="col s12">Your score is: <p style="color:green">` + savedGameResults.message + `</p></div>
+        <div class="col s12">Would you like to leave a rating?
+            <input style="color:white" id="recipe-rating" name="recipe-rating" type="number" min="1" max="5">
+        </div></div>`;
+
+        M.toast({html: endPromptHtml, displayLength: 10000, completeCallback:  function(){
+            $.ajax({
+                url: "/update-recipe-rating",
+                type: "POST",
+                data: JSON.stringify({"score":$('#recipe-rating').val(), "gameId":game.id}),
+                contentType: "application/json",
+                dataType: "json",
+                success: function(data){console.log(data);},
+                failure: function(errMsg) {
+                    console.log(errMsg);
+                }
+            });
+
+
+            window.location.href = "/home";
+            }
+        });
+    });
+
+    if(game.gameState){
+        let doesProgressExist = game.gameState.ingredients.length != 0 || game.gameState.kitchenTools.length != 0 || game.gameState.intermediateIngredients.length != 0;
+        if(doesProgressExist) {
+            const prevGame = game.gameState;
+            const ingredients = prevGame.ingredients;
+            for (let i = 0; i < ingredients.length; i++) {
+                itemBoard.addItem(ingredients[i], "ingredient");
+            }
+
+            const tools = prevGame.kitchenTools;
+            for (let i = 0; i < tools.length; i++) {
+                itemBoard.addItem(tools[i], "tool");
+            }
+
+            /*const intermediateIngredients = prevGame.intermediateIngredients;
+            for (let i = 0; i < intermediateIngredients.length; i++) {
+                itemBoard.addItem(intermediateIngredients[i], "processedItem", intermediateIngredients[i].tag);
+            }*/
+
+            const receivedScores = prevGame.scores;
+            for (let i = 0; i < receivedScores.length; i++) {
+                if(receivedScores[i] === true) {
+                    this.recipe_ul.children[i].classList.add("completed");
+                }
+            }
+            if (isRecipeCompleted()) $("#finish").removeClass("disabled");
+            itemBoard.updateMenu();
+        }
+
+
+    }
+
+    window.onbeforeunload = function() {
+    return "Do you really want to leave? Any unsaved changes will be lost!";
+   };
+</script>
+
+</body>
+</html>
